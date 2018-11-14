@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "E:\\ydzhu_git\\demo\\testOpenGL\\OpenGLEXpDemo\\app\\build\\intermediates\\res\\merged\\debug\\values_values.arsc.flat",
+            "map": [
+                {
+                    "source": "E:\\ydzhu_git\\demo\\testOpenGL\\OpenGLEXpDemo\\app\\src\\main\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "4,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "127,59",
+                        "endColumns": "47,66",
+                        "endOffsets": "170,121"
+                    },
+                    "to": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,103",
+                        "endColumns": "47,66",
+                        "endOffsets": "98,165"
+                    }
+                }
+            ]
+        }
+    ]
+}

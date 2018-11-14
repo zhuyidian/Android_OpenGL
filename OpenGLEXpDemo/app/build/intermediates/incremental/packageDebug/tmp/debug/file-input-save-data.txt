@@ -1,0 +1,15 @@
+#Internal package file, do not edit.
+#Wed Nov 14 16:59:51 CST 2018
+1.base=E\:\\ydzhu_git\\demo\\testOpenGL\\OpenGLEXpDemo\\app\\build\\intermediates\\assets\\debug
+2.path=classes.dex
+0.baseType=DIRECTORY
+2.base=E\:\\ydzhu_git\\demo\\testOpenGL\\OpenGLEXpDemo\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+2.set=DEX
+1.baseType=DIRECTORY
+count=3
+1.set=ASSET
+0.path=frag.sh
+0.set=ASSET
+0.base=E\:\\ydzhu_git\\demo\\testOpenGL\\OpenGLEXpDemo\\app\\build\\intermediates\\assets\\debug
+2.baseType=DIRECTORY
+1.path=vertex.sh
