@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "E:\\ydzhu_git\\demo\\testOpenGL\\OpenGLEXpDemo\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+            "outputFile": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
             "map": [
                 {
-                    "source": "E:\\ydzhu_git\\demo\\testOpenGL\\OpenGLEXpDemo\\app\\src\\main\\res\\values\\strings.xml",
+                    "source": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\app\\src\\main\\res\\values\\strings.xml",
                     "from": {
                         "startLines": "4,3",
                         "startColumns": "4,4",
