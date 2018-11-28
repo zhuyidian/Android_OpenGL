@@ -11,6 +11,7 @@ import opengl.tools.CoordinateTransformation;
 import opengl.tools.DataManage;
 import opengl.view.OpenGLViewGrid;
 import opengl.view.OpenGLViewTest;
+import opengl.view.OpenGLViewTextureTest;
 import opengl.view.OpenGLViewTriangle;
 import opengl.view.Tree3DSurfaceView;
 
@@ -19,12 +20,17 @@ public class OpenGLEXp2Activity extends Activity {
     private OpenGLViewTriangle mOpenGLViewTriangle;
     private Tree3DSurfaceView mTree3DSurfaceView;
     private OpenGLViewTest mOpenGLViewTest;
+    private OpenGLViewTextureTest mOpenGLViewTextureTest;
     public static float WIDTH;
     public static float HEIGHT;
 	private float w;
 	private float h;
 	private enum ChoiceOpenglDemoEnum{
-	    GRID_OPENGL,TRIANGLE_OPENGL,TREE3D_OPENGL,TEST_OPENGL
+	    GRID_OPENGL,
+        TRIANGLE_OPENGL,
+        TREE3D_OPENGL,
+        TEST_OPENGL,
+        TEXTURE_TEST_OPENGL,
     }
     private ChoiceOpenglDemoEnum choiceOpenglDemoEnum = ChoiceOpenglDemoEnum.TEST_OPENGL;
 
@@ -70,6 +76,9 @@ public class OpenGLEXp2Activity extends Activity {
             CoordinateTransformation.setWH(ww, hh);
             mOpenGLViewTest = new OpenGLViewTest(this);
             setContentView(mOpenGLViewTest);
+        } else if(choiceOpenglDemoEnum == ChoiceOpenglDemoEnum.TEXTURE_TEST_OPENGL) {
+            mOpenGLViewTextureTest = new OpenGLViewTextureTest(this);
+            setContentView(mOpenGLViewTextureTest);
         }
     }
 

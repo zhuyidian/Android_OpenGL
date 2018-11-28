@@ -6,10 +6,15 @@ import android.opengl.GLU;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import opengl.tools.graphics.ColorTriangle;
 import opengl.tools.graphics.DoubleTriangle;
+import opengl.tools.graphics.FlatColoredSquare;
+import opengl.tools.graphics.Octagon;
+import opengl.tools.graphics.SmoothColoredSquare;
 import opengl.tools.graphics.Square;
 import opengl.tools.graphics.Triangle;
+import opengl.tools.mesh.Cube;
+import opengl.tools.mesh.Group;
+import opengl.tools.mesh.Plane;
 
 /**
  具体在GlSurfaceView.Renderer中的绘制步骤：
@@ -25,8 +30,18 @@ public class OpenGLRendererTest implements Renderer {
 	Square square = new Square();
 	Triangle triangle = new Triangle();
 	DoubleTriangle doubleTriangle = new DoubleTriangle();
-	ColorTriangle colorTriangle = new ColorTriangle();
-	private float angle = 0.0f;
+	Octagon octagon = new Octagon();
+	SmoothColoredSquare smoothColoredSquare = new SmoothColoredSquare();
+	FlatColoredSquare flatColoredSquare = new FlatColoredSquare();
+	Cube cube = new Cube(1,1,1);
+	Plane plane = new Plane(1,1,8,8);
+	Group group = new Group();
+
+	public OpenGLRendererTest(){
+		cube.rx = 45f;
+		cube.ry = 45f;
+		group.add(cube);
+	}
 
 	@Override
 	public void onDrawFrame(GL10 gl) {
@@ -39,14 +54,29 @@ public class OpenGLRendererTest implements Renderer {
 		// 对应这种情况OpenGL不会渲染离view Port很近的画面，因此我们需要将画面向后退一点距离。
 		gl.glTranslatef(0, 0, -4);
 
+//###########################graphics########################
 //(1)绘制矩形
 		//square.draw(gl);
 //(2)绘制三角形
 		//triangle.draw(gl);
 //(3)绘制double三角形
 		//doubleTriangle.draw(gl);
-//(4)绘制彩色三角形
-		colorTriangle.draw(gl);
+//(4)绘制彩色矩形
+		//smoothColoredSquare.draw(gl);
+//(5)绘制单色矩形
+		//flatColoredSquare.draw(gl);
+//(6)绘制单色八边形
+		//octagon.draw(gl);
+//###########################mesh########################
+//(6)绘制彩色正方体  cube
+		//gl.glPushMatrix();
+		//gl.glRotatef(angle, 0.5f, 0.5f, 0.5f);
+		//cube.draw(gl);
+		//gl.glPopMatrix();
+//(7)绘制矩形  plane
+		//plane.draw(gl);
+//(8)绘制六角形
+		group.draw(gl);
 
 //(2)3个矩形变换显示
 //		// A以屏幕中心逆时针旋转
@@ -120,6 +150,7 @@ public class OpenGLRendererTest implements Renderer {
 		// TODO Auto-generated method stub
 		// 格式GRBA 将背景颜色设置成黑色
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
+		//gl.glClearColor(0.0f, 1.0f, 1.0f, 0.5f);  //蓝色背景
 		// 启用平滑着色，默认不是真的需要
 		gl.glShadeModel(GL10.GL_SMOOTH);
 		// 深度缓冲设置

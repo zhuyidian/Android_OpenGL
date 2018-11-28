@@ -14,7 +14,8 @@ public final class R {
     public static final int desert=0x7f010002;
     public static final int ic_launcher=0x7f010003;
     public static final int icon=0x7f010004;
-    public static final int tree=0x7f010005;
+    public static final int jay=0x7f010005;
+    public static final int tree=0x7f010006;
   }
   public static final class layout {
     public static final int main=0x7f020000;
