@@ -10,7 +10,9 @@ import opengl.tools.graphics.DoubleTriangle;
 import opengl.tools.graphics.FlatColoredSquare;
 import opengl.tools.graphics.Octagon;
 import opengl.tools.graphics.SmoothColoredSquare;
+import opengl.tools.graphics.Sphere;
 import opengl.tools.graphics.Square;
+import opengl.tools.graphics.Star;
 import opengl.tools.graphics.Triangle;
 import opengl.tools.mesh.Cube;
 import opengl.tools.mesh.Group;
@@ -36,6 +38,8 @@ public class OpenGLRendererTest implements Renderer {
 	Cube cube = new Cube(1,1,1);
 	Plane plane = new Plane(1,1,8,8);
 	Group group = new Group();
+	Star star = new Star();
+    Sphere sphere = new Sphere();
 
 	public OpenGLRendererTest(){
 		cube.rx = 45f;
@@ -76,7 +80,11 @@ public class OpenGLRendererTest implements Renderer {
 //(7)绘制矩形  plane
 		//plane.draw(gl);
 //(8)绘制六角形
-		group.draw(gl);
+		//group.draw(gl);
+//(9)绘制五角星
+		//star.draw(gl);
+//(10)绘制球
+        sphere.draw(gl);
 
 //(2)3个矩形变换显示
 //		// A以屏幕中心逆时针旋转

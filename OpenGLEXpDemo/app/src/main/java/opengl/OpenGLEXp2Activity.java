@@ -2,37 +2,47 @@ package opengl;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 
+import javax.microedition.khronos.opengles.GL10;
+
+import opengl.interport.IOpenGLDemo;
 import opengl.tools.CoordinateTransformation;
 import opengl.tools.DataManage;
+import opengl.tools.graphics.DrawIcosahedron;
+import opengl.tools.graphics.DrawSphere;
+import opengl.view.OpenGLRendererPublicTest;
 import opengl.view.OpenGLViewGrid;
 import opengl.view.OpenGLViewTest;
 import opengl.view.OpenGLViewTextureTest;
 import opengl.view.OpenGLViewTriangle;
 import opengl.view.Tree3DSurfaceView;
 
-public class OpenGLEXp2Activity extends Activity {
+public class OpenGLEXp2Activity extends Activity implements IOpenGLDemo {
 	private OpenGLViewGrid mOpenGLViewGrid;
     private OpenGLViewTriangle mOpenGLViewTriangle;
     private Tree3DSurfaceView mTree3DSurfaceView;
     private OpenGLViewTest mOpenGLViewTest;
     private OpenGLViewTextureTest mOpenGLViewTextureTest;
+    private GLSurfaceView mGLSurfaceView;
     public static float WIDTH;
     public static float HEIGHT;
 	private float w;
 	private float h;
-	private enum ChoiceOpenglDemoEnum{
+
+    private enum ChoiceOpenglDemoEnum{
 	    GRID_OPENGL,
         TRIANGLE_OPENGL,
         TREE3D_OPENGL,
         TEST_OPENGL,
         TEXTURE_TEST_OPENGL,
+        PUBLIC_TEST_OPENGL
     }
-    private ChoiceOpenglDemoEnum choiceOpenglDemoEnum = ChoiceOpenglDemoEnum.TEST_OPENGL;
+    private ChoiceOpenglDemoEnum choiceOpenglDemoEnum = ChoiceOpenglDemoEnum.PUBLIC_TEST_OPENGL;
 
     /** Called when the activity is first created. */
     @Override
@@ -79,7 +89,32 @@ public class OpenGLEXp2Activity extends Activity {
         } else if(choiceOpenglDemoEnum == ChoiceOpenglDemoEnum.TEXTURE_TEST_OPENGL) {
             mOpenGLViewTextureTest = new OpenGLViewTextureTest(this);
             setContentView(mOpenGLViewTextureTest);
+        } else if(choiceOpenglDemoEnum == ChoiceOpenglDemoEnum.PUBLIC_TEST_OPENGL) {
+            DrawIcosahedron.init();
+            mGLSurfaceView = new GLSurfaceView(this);
+            mGLSurfaceView.setRenderer(new OpenGLRendererPublicTest(this));
+            setContentView(mGLSurfaceView);
         }
+    }
+
+    @Override
+    public void DrawScene(GL10 gl) {
+        gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        // Clears the screen and depth buffer.
+        gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+
+        //画点
+        //DrawPoint.DrawScene(gl);
+        //画线
+        //DrawLine.DrawScene(gl);
+        //画三角形
+        //DrawTriangle.DrawScene(gl);
+        //画20面体
+        //DrawIcosahedron.DrawScene(gl);
+        //画太阳系
+        //DrawSolarSystem.DrawScene(gl);
+        //画球
+        DrawSphere.DrawScene(gl);
     }
 
     @Override
@@ -89,6 +124,8 @@ public class OpenGLEXp2Activity extends Activity {
             if (mTree3DSurfaceView != null) {
                 mTree3DSurfaceView.onResume();
             }
+        }else if(choiceOpenglDemoEnum == ChoiceOpenglDemoEnum.PUBLIC_TEST_OPENGL) {
+            mGLSurfaceView.onResume();
         }
     }
 
@@ -99,6 +136,8 @@ public class OpenGLEXp2Activity extends Activity {
             if (mTree3DSurfaceView != null) {
                 mTree3DSurfaceView.onPause();
             }
+        }else if(choiceOpenglDemoEnum == ChoiceOpenglDemoEnum.PUBLIC_TEST_OPENGL) {
+            mGLSurfaceView.onPause();
         }
     }
 }

@@ -104,7 +104,7 @@ public class Mesh {
         gl.glRotatef(ry, 0, 1, 0);
         gl.glRotatef(rz, 0, 0, 1);
 
-        // Point out the where the color buffer is.
+        // Point out the where the color buffer is. 可以重新定义顶点的顺序，顶点的顺序由indices Buffer 指定
         gl.glDrawElements(GL10.GL_TRIANGLES, numOfIndices, GL10.GL_UNSIGNED_SHORT, indicesBuffer);
         // Disable the vertices buffer.
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);

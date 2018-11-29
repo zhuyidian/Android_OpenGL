@@ -64,7 +64,7 @@ public class DoubleTriangle {
             case 1:
             case 2:
                 gl.glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-                gl.glDrawArrays(GL10.GL_TRIANGLES, 0, 6);
+                gl.glDrawArrays(GL10.GL_TRIANGLES, 0, 6);  //使用VetexBuffer 来绘制，顶点的顺序由vertexBuffer中的顺序指定
                 break;
             case 3:
             case 4:
