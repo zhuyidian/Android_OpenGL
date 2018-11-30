@@ -19,8 +19,8 @@ import opengl.tools.Desert;
 import opengl.tools.MatrixState;
 import opengl.tools.TreeGroup;
 
-import static opengl.OpenGLEXp2Activity.HEIGHT;
-import static opengl.OpenGLEXp2Activity.WIDTH;
+import static opengl.OpenGLPublicActivity.HEIGHT;
+import static opengl.OpenGLPublicActivity.WIDTH;
 
 public class Tree3DSurfaceView extends GLSurfaceView {
 	public static final float UNIT_SIZE = 1f;

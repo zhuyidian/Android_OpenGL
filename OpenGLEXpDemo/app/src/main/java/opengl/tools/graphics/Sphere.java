@@ -28,21 +28,21 @@ public class Sphere {
     	for (pai = -90.0f; pai < 90.0f; pai += step) {
     		int	n = 0;
 
-            r1 = (float) Math.cos(pai * Math.PI / 180.0);
-    		r2 = (float) Math.cos((pai + step) * Math.PI / 180.0);
-    		h1 = (float) Math.sin(pai * Math.PI / 180.0);
-    		h2 = (float) Math.sin((pai + step) * Math.PI / 180.0);
+            r1 = (float) Math.cos(pai * Math.PI / 180.0);  //r1的范围0~1~0也即cos-90°~cos90°
+    		r2 = (float) Math.cos((pai + step) * Math.PI / 180.0);  //r2的范围0~1~0也即cos-90°~cos90°
+    		h1 = (float) Math.sin(pai * Math.PI / 180.0);    //h1的范围-1~0~1也即sin-90°~sin90°
+    		h2 = (float) Math.sin((pai + step) * Math.PI / 180.0);  //h2的范围-1~0~1也即sin-90°~sin90°   h2>h1
 
     		for (theta = 0.0f; theta <= 360.0f; theta += step) {
-    			co = (float) Math.cos(theta * Math.PI / 180.0);
-    			si = -(float) Math.sin(theta * Math.PI / 180.0);
+    			co = (float) Math.cos(theta * Math.PI / 180.0);   //co的范围cos0＝1,cos90＝0,cos180＝－1,cos270＝0,cos360＝1
+    			si = -(float) Math.sin(theta * Math.PI / 180.0);  //si的范围sin0＝0,sin90＝1,sin180＝0,sin270＝－1,sin360＝0
 
-    			v[n][0] = (r2 * co);
-    			v[n][1] = (h2);
-    			v[n][2] = (r2 * si);
-    			v[n + 1][0] = (r1 * co);
-    			v[n + 1][1] = (h1);
-    			v[n + 1][2] = (r1 * si);
+    			v[n][0] = (r2 * co);   //0.2*
+    			v[n][1] = (h2);  //-0.8
+    			v[n][2] = (r2 * si);  //0.2*
+    			v[n + 1][0] = (r1 * co);  //0.1*
+    			v[n + 1][1] = (h1);   //-0.9
+    			v[n + 1][2] = (r1 * si);  //0.1*
 
     			vBuf.put(v[n]);
     			vBuf.put(v[n + 1]);
@@ -59,7 +59,6 @@ public class Sphere {
     				n = 0;
     				theta -= step;
     			}
-    			
     		}
 			vBuf.position(0);
 
@@ -71,5 +70,4 @@ public class Sphere {
     	gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
     	gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
 	}
-
 }

@@ -20,6 +20,10 @@
         "source": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\app\\src\\main\\res\\drawable\\jay.png"
     },
     {
+        "merged": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\app\\build\\intermediates\\res\\merged\\debug\\drawable_earth.png.flat",
+        "source": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\app\\src\\main\\res\\drawable\\earth.png"
+    },
+    {
         "merged": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_icon.png.flat",
         "source": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\app\\src\\main\\res\\drawable-hdpi\\icon.png"
     },

@@ -14,7 +14,7 @@ import opengl.interport.IOpenGLDemo;
 import opengl.tools.CoordinateTransformation;
 import opengl.tools.DataManage;
 import opengl.tools.graphics.DrawIcosahedron;
-import opengl.tools.graphics.DrawSphere;
+import opengl.tools.graphics.DrawSolarSystem;
 import opengl.view.OpenGLRendererPublicTest;
 import opengl.view.OpenGLViewGrid;
 import opengl.view.OpenGLViewTest;
@@ -22,7 +22,7 @@ import opengl.view.OpenGLViewTextureTest;
 import opengl.view.OpenGLViewTriangle;
 import opengl.view.Tree3DSurfaceView;
 
-public class OpenGLEXp2Activity extends Activity implements IOpenGLDemo {
+public class OpenGLPublicActivity extends Activity implements IOpenGLDemo {
 	private OpenGLViewGrid mOpenGLViewGrid;
     private OpenGLViewTriangle mOpenGLViewTriangle;
     private Tree3DSurfaceView mTree3DSurfaceView;
@@ -112,9 +112,19 @@ public class OpenGLEXp2Activity extends Activity implements IOpenGLDemo {
         //画20面体
         //DrawIcosahedron.DrawScene(gl);
         //画太阳系
-        //DrawSolarSystem.DrawScene(gl);
+        DrawSolarSystem.DrawScene(gl);
         //画球
-        DrawSphere.DrawScene(gl);
+        //DrawSphere.DrawScene(gl);
+    }
+
+    @Override
+    public void initLight(GL10 gl) {
+
+    }
+
+    @Override
+    public void initObject(GL10 gl) {
+
     }
 
     @Override
