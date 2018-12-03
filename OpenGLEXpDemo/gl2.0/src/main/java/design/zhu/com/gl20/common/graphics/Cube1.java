@@ -97,13 +97,15 @@ public class Cube1 {
         indexBuffer.position(0);
     }
 
+    private float[] matrix;
+    public void setMatrix(float[] matrix){
+        this.matrix=matrix;
+    }
+
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig){
         vertexShaderCode = ShaderUtil.loadFromAssetsFile("square3dvertex.sh", BaseApplication.getContext().getResources());
         fragmentShaderCode = ShaderUtil.loadFromAssetsFile("square3dfrag.sh", BaseApplication.getContext().getResources());
         program = ShaderUtil.createProgram(vertexShaderCode,fragmentShaderCode);
-        // 将program加入OpenGL ES环境中
-        // 告诉OpenGL，使用我们准备好了的shader program来渲染
-        GLES20.glUseProgram(program);
 
         // 获得形状的变换矩阵的handle
         uMatrixLocation = GLES20.glGetUniformLocation(program, U_MATRIX);
@@ -111,12 +113,6 @@ public class Cube1 {
         aPositionLocation = GLES20.glGetAttribLocation(program, A_POSITION);
         // 获取指向fragment shader的成员vColor的handle
         uColorLocation = GLES20.glGetAttribLocation(program, U_COLOR);
-        //---------传入顶点数据数据
-        GLES20.glVertexAttribPointer(aPositionLocation, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false, 0, vertexBuffer);
-        GLES20.glEnableVertexAttribArray(aPositionLocation);
-        //---------传入颜色数据
-        GLES20.glVertexAttribPointer(uColorLocation, COORDS_PER_COLOR, GLES20.GL_FLOAT, false, 0, colorBuffer);
-        GLES20.glEnableVertexAttribArray(uColorLocation);
     }
 
     public void onSurfaceChanged(GL10 gl10, int width, int height){
@@ -129,9 +125,29 @@ public class Cube1 {
     }
 
     public void onDrawFrame(GL10 gl10) {
-        // 应用投影和视口变换
-        GLES20.glUniformMatrix4fv(uMatrixLocation, 1, false, MatrixState.getFinalMatrix(),0);
+        // 将program加入OpenGL ES环境中
+        // 告诉OpenGL，使用我们准备好了的shader program来渲染
+        GLES20.glUseProgram(program);
+
+        //指定vMatrix的值
+        if(matrix!=null){
+            GLES20.glUniformMatrix4fv(uMatrixLocation,1,false,matrix,0);
+        }else{
+            // 应用投影和视口变换
+            GLES20.glUniformMatrix4fv(uMatrixLocation, 1, false, MatrixState.getFinalMatrix(),0);
+        }
+        //---------传入顶点数据数据
+        GLES20.glVertexAttribPointer(aPositionLocation, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false, 0, vertexBuffer);
+        GLES20.glEnableVertexAttribArray(aPositionLocation);
+        //---------传入颜色数据
+        GLES20.glVertexAttribPointer(uColorLocation, COORDS_PER_COLOR, GLES20.GL_FLOAT, false, 0, colorBuffer);
+        GLES20.glEnableVertexAttribArray(uColorLocation);
+
         //索引法绘制正方体
         GLES20.glDrawElements(GLES20.GL_TRIANGLES,index.length, GLES20.GL_UNSIGNED_SHORT,indexBuffer);
+
+        //禁止顶点数组的句柄
+        GLES20.glDisableVertexAttribArray(aPositionLocation);
+        GLES20.glDisableVertexAttribArray(uColorLocation);
     }
 }

@@ -13,7 +13,6 @@ import javax.microedition.khronos.opengles.GL10;
 import design.zhu.com.gl20.BaseApplication;
 import design.zhu.com.gl20.common.tools.MatrixState;
 import design.zhu.com.gl20.common.tools.ShaderUtil;
-import design.zhu.com.gl20.renderer.OpenGLRendererTriangle3d;
 
 public class Triangle3d {
 	//自定义渲染管线着色程序id
