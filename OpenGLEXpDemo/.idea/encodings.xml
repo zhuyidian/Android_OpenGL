@@ -6,6 +6,10 @@
     <file url="file://$PROJECT_DIR$/gl1.0/src/main/java/opengl/tools/graphics/Ball.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gl1.0/src/main/java/opengl/view/OpenGLRendererTriangle.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gl1.0/src/main/java/opengl/view/OpenGLViewTriangle.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gl2.0/src/main/assets/triangle3dfrag.sh" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gl2.0/src/main/assets/triangle3dvertex.sh" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gl2.0/src/main/assets/trianglefrag.sh" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gl2.0/src/main/assets/trianglevertex.sh" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

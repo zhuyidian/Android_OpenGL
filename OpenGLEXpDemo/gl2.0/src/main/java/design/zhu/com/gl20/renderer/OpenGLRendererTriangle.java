@@ -1,19 +1,20 @@
 package design.zhu.com.gl20.renderer;
 
 import android.opengl.GLES20;
+import android.opengl.GLSurfaceView;
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.Matrix;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import design.zhu.com.gl20.tools.Triangle;
+import design.zhu.com.gl20.common.graphics.Triangle;
 
 public class OpenGLRendererTriangle implements Renderer {
 	private Triangle mTriangle;
-	private final float[] mMVPMatrix = new float[16];
-	private final float[] mProjectionMatrix = new float[16];
-	private final float[] mViewMatrix = new float[16];
+
+	public OpenGLRendererTriangle(){
+	}
 
 	@Override
 	public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
@@ -23,6 +24,7 @@ public class OpenGLRendererTriangle implements Renderer {
 		//your init
 		// 初始化一个三角形
 		mTriangle = new Triangle();
+		mTriangle.onSurfaceCreated(gl10, eglConfig);
 	}
 
 	@Override
@@ -30,10 +32,7 @@ public class OpenGLRendererTriangle implements Renderer {
 		// 参数是left, top, width, height
 		GLES20.glViewport(0, 0, i, i1);
 
-		//得到投影矩阵
-		float ratio =(float) i / i1;
-		// 此投影矩阵在onDrawFrame()中将应用到对象的坐标
-		Matrix.frustumM(mProjectionMatrix,0,-ratio, ratio,-1,1,3,7);
+		mTriangle.onSurfaceChanged(gl10,i,i1);
 	}
 
 	@Override
@@ -41,10 +40,6 @@ public class OpenGLRendererTriangle implements Renderer {
 		// 清除颜色缓冲区，因为我们要开始新一帧的绘制了，所以先清理，以免有脏数据
 		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-		// 设置相机的位置(视口矩阵)
-		Matrix.setLookAtM(mViewMatrix,0,0,0,-3,0f,0f,0f,0f,1.0f,0.0f);
-		// 计算投影和视口变换
-		Matrix.multiplyMM(mMVPMatrix,0, mProjectionMatrix,0, mViewMatrix,0);
-		mTriangle.draw(mMVPMatrix);
+		mTriangle.onDrawFrame(gl10);
 	}
 }

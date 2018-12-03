@@ -3,6 +3,7 @@
     package="design.zhu.com.gl20">
 
     <application
+        android:name="design.zhu.com.gl20.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
