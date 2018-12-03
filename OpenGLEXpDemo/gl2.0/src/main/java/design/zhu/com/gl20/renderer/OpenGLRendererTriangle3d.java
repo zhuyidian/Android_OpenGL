@@ -1,14 +1,11 @@
 package design.zhu.com.gl20.renderer;
 
-import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
-import android.opengl.Matrix;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import design.zhu.com.gl20.common.graphics.Triangle;
 import design.zhu.com.gl20.common.graphics.Triangle3d;
 
 public class OpenGLRendererTriangle3d implements GLSurfaceView.Renderer {

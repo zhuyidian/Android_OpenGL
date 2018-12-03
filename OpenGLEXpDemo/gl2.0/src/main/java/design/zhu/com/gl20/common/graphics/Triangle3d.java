@@ -11,6 +11,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import design.zhu.com.gl20.BaseApplication;
+import design.zhu.com.gl20.common.tools.MatrixState;
 import design.zhu.com.gl20.common.tools.ShaderUtil;
 import design.zhu.com.gl20.renderer.OpenGLRendererTriangle3d;
 
@@ -31,8 +32,12 @@ public class Triangle3d {
 	int maPositionHandle;								//顶点位置属性引用
 	int maColorHandle;									//顶点颜色属性引用
 	public float[] mMVPMatrix;					//总变换矩阵
-	public float[] mProjMatrix = new float[16];	//投影矩阵
-	public float[] mVMatrix = new float[16];		//相机视口矩阵
+	public float[] mProjMatrix;	//投影矩阵
+	public float[] mVMatrix;		//相机视口矩阵
+    /*
+     * 这个变换矩阵 在设置变换 , 位移 , 旋转的时候 将参数设置到这个矩阵中去
+     */
+    float[] mMMatrix;			//具体物体的3D变换矩阵, 包括旋转, 平移, 缩放
 
 	/*
 	 * 这两个缓冲获得方法
@@ -42,10 +47,6 @@ public class Triangle3d {
 	 */
 	FloatBuffer mVertexBuffer;							//顶点坐标数据缓冲
 	FloatBuffer mColorBuffer;							//顶点着色数据缓冲
-	/*
-	 * 这个变换矩阵 在设置变换 , 位移 , 旋转的时候 将参数设置到这个矩阵中去
-	 */
-	float[] mMMatrix = new float[16];			//具体物体的3D变换矩阵, 包括旋转, 平移, 缩放
 	int vCount = 0;									//顶点数量    初始化的时候得到
 	float xAngle = 0;									//绕x轴旋转角度  在GLSurfaceView线程中不停的变化
 	private RotateThread mRotateThread;		//该线程用来改变图形角度
@@ -87,6 +88,9 @@ public class Triangle3d {
 		/*
 		 * 创建一个ByteBuffer对象, 这个对象中缓冲区大小为vertices数组大小的4倍
 		 * 因为每个float占4个字节, 创建的缓冲区大小正好将vertices装进去
+		 *
+		 * allocateDirect()方法创建ByteBuffer对象, 同时分配该字节缓冲去的大小,
+		 * 注意这个对象最终要转为FloatBuffer对象, 每个float占4个字节, 一共有vertices.length个浮点数, 因此要分配vertices.length * 4 个字节大小.
 		 */
 		ByteBuffer vbb = ByteBuffer.allocateDirect(vertices.length * 4);
 		//设置字节顺序为本地操作系统顺序
@@ -103,9 +107,12 @@ public class Triangle3d {
 		 * 每四个浮点值代表一种颜色
 		 */
 		float colors[] = new float[]{
-				1, 1, 1, 0,
-				0, 0, 1, 0,
-				0, 1, 0, 0
+//				1, 1, 1, 0,
+//				0, 0, 1, 0,
+//				0, 1, 0, 0
+				0.0f, 1.0f, 0.0f, 1.0f ,
+				1.0f, 0.0f, 0.0f, 1.0f,
+				0.0f, 0.0f, 1.0f, 1.0f
 		};
 		ByteBuffer cbb = ByteBuffer.allocateDirect(colors.length * 4);//创建ByteBuffer
 		cbb.order(ByteOrder.nativeOrder());//设置字节顺序
@@ -141,6 +148,9 @@ public class Triangle3d {
 		 * 创建着色器程序, 传入顶点着色器脚本 和 片元着色器脚本 注意顺序不要错
 		 */
 		mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);
+		//根据着色程序id 指定要使用的着色器
+		GLES20.glUseProgram(mProgram);
+
 		/*
 		 * 从着色程序中获取 属性变量 顶点坐标(颜色)数据的引用
 		 * 其中的"aPosition"是顶点着色器中的顶点位置信息
@@ -153,6 +163,32 @@ public class Triangle3d {
 		 * uMVPMatrix 是顶点着色器中定义的一致变量
 		 */
 		muMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
+		/*
+		 * 将顶点位置数据传送进渲染管线, 为画笔指定定点的位置数据
+		 */
+		GLES20.glVertexAttribPointer(
+				maPositionHandle,
+				3,
+				GLES20.GL_FLOAT,
+				false,
+				3 * 4,
+				mVertexBuffer
+		);
+		//启用顶点位置数据
+		GLES20.glEnableVertexAttribArray(maPositionHandle);
+		/*
+		 * 将顶点颜色数据传送进渲染管线, 为画笔指定定点的颜色数据
+		 */
+		GLES20.glVertexAttribPointer(
+				maColorHandle,
+				4,
+				GLES20.GL_FLOAT,
+				false,
+				4 * 4,
+				mColorBuffer
+		);
+		//启用顶点颜色数据
+		GLES20.glEnableVertexAttribArray(maColorHandle);
 	}
 
 	public void onSurfaceChanged(GL10 gl10, int width, int height){
@@ -166,14 +202,16 @@ public class Triangle3d {
 		 * 后面的四个参数分别是 左 右 下 上 的距离
 		 * 最后两个参数是 近视点 和 远视点 距离
 		 */
-		Matrix.frustumM(mProjMatrix, 0, -ratio, ratio, -1, 1, 1, 10);
+		//Matrix.frustumM(mProjMatrix, 0, -ratio, ratio, -1, 1, 1, 10);
+		mProjMatrix = MatrixState.setProjectFrustum( -ratio, ratio, -1, 1, 1, 10);
 		/*
 		 * 设置摄像机参数矩阵
 		 * 参数介绍 :
 		 * 前两个参数是摄像机参数矩阵 和 矩阵数组的起始位置
 		 * 后面三个一组是三个空间坐标 先后依次是 摄像机的位置  看的方向 摄像机上方朝向
 		 */
-		Matrix.setLookAtM(mVMatrix, 0, 0f,0f,3f,0f,0f,0f,0f,1.0f,0.0f);
+		//Matrix.setLookAtM(mVMatrix, 0, 0f,0f,3f,0f,0f,0f,0f,1.0f,0.0f);
+		mVMatrix = MatrixState.setCamera(0f,0f,3f,0f,0f,0f,0f,1.0f,0.0f);
 	}
 	
 	/**
@@ -187,53 +225,42 @@ public class Triangle3d {
 	 * 		⑤ 执行绘制
 	 */
 	public void onDrawFrame(GL10 gl10) {
-		//根据着色程序id 指定要使用的着色器
-		GLES20.glUseProgram(mProgram);
 		/*
-		 * 设置旋转变化矩阵 
+		 * 设置旋转变化矩阵
 		 * 参数介绍 : ① 3D变换矩阵 ② 矩阵数组的起始索引 ③旋转的角度 ④⑤⑥
+		 *
+		 * 设置旋转初始情况
+			Matrix.setRotateM(float[] rm, int rmOffset, float a, float x, float y, float z)
+			参数 : rm 变换矩阵; rmOffset 变换矩阵的索引; a 旋转角度; 剩下的三个是旋转的轴
+			这个方法的作用是设置旋转变化矩阵
 		 */
-		Matrix.setRotateM(mMMatrix, 0, 0, 0, 1, 0);
+		//Matrix.setRotateM(mMMatrix, 0, 0, 0, 1, 0);
+        mMMatrix = MatrixState.setRotateM(0, 0, 1, 0);
 		/*
 		 * 设置沿z轴正方向位移
 		 * 参数介绍 : ① 变换矩阵 ② 矩阵索引开始位置 ③④⑤设置位移方向z轴
+		 *
+		 * 设置位移
+			 Matrix.translateM(float[] m, int mOffset, float x, float y, float z)
+			参数 : m 变换矩阵; mOffset 变换矩阵的起始位置; 剩下的三个是位移向量.
 		 */
-		Matrix.translateM(mMMatrix, 0, 0, 0, 1);
+		//Matrix.translateM(mMMatrix, 0, 0, 0, 1);
+        mMMatrix = MatrixState.translateM(0, 0, 1);
 		/*
 		 * 设置绕x轴旋转
 		 * 参数介绍 : ① 变换矩阵 ② 索引开始位置 ③ 旋转角度 ④⑤⑥ 设置绕哪个轴旋转
+		 *
+		 * 设置旋转矩阵
+			 Matrix.rotateM(float[] m, int mOffset, float a, float x, float y, float z)
+			参数 : m 变换矩阵; mOffset 变换矩阵起始位置; a 旋转的角度; 剩下的三个参数是旋转的轴;
 		 */
-		Matrix.rotateM(mMMatrix, 0, xAngle, 1, 0, 0);
+		//Matrix.rotateM(mMMatrix, 0, xAngle, 1, 0, 0);
+        mMMatrix = MatrixState.rotateM(xAngle, 1, 0, 0);
 		/*
 		 * 应用投影和视口变换
 		 */
 		GLES20.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, getFianlMatrix(mMMatrix), 0);
-		/*
-		 * 将顶点位置数据传送进渲染管线, 为画笔指定定点的位置数据
-		 */
-		GLES20.glVertexAttribPointer(
-				maPositionHandle, 
-				3, 
-				GLES20.GL_FLOAT,
-				false, 
-				3 * 4, 
-				mVertexBuffer
-		);
-		/*
-		 * 将顶点颜色数据传送进渲染管线, 为画笔指定定点的颜色数据
-		 */
-		GLES20.glVertexAttribPointer(
-				maColorHandle, 
-				4, 
-				GLES20.GL_FLOAT,
-				false, 
-				4 * 4, 
-				mColorBuffer
-		);
-		//启用顶点位置数据
-		GLES20.glEnableVertexAttribArray(maPositionHandle);
-		//启用顶点颜色数据
-		GLES20.glEnableVertexAttribArray(maColorHandle);
+
 		//执行绘制
 		GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vCount);
 	}

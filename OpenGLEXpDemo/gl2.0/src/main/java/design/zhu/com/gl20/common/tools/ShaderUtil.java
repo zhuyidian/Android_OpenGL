@@ -14,7 +14,7 @@ public class ShaderUtil {
 	/**
 	 * 加载着色器方法
 	 * 
-	 * 流程 : 
+	 * 流程 : 创建着色器 -> 加载着色器脚本 -> 编译着色器 -> 获取着色器编译结果
 	 * 
 	 * ① 创建着色器
 	 * ② 加载着色器脚本
@@ -35,6 +35,16 @@ public class ShaderUtil {
 			GLES20.glCompileShader(shader);
 			int[] compiled = new int[1];
 			//4.获取着色器的编译情况, 如果结果为0, 说明编译失败
+			/*
+			int complied[] = new int[1];
+			GLES20.glGetShaderiv(shader, GLES20.GL_COMPILE_STATUS, complied, 0);
+			参数 :
+				shader : 着色器引用 , 这个着色器已经加载了着色脚本字符串以及经过了编译 ;
+				pname : GLES20.GL_COMPILE_STATUS : 获取信息类型代码 : 我们要获取编译情况 , 这里是编译状态的代码
+				params[] : compile : 存放结果数组
+				index : 存放结果索引 , 将编译成功的脚本数放在数组的哪个索引下
+			返回值 : 该方法没有返回值
+			 */
 			GLES20.glGetShaderiv(shader, GLES20.GL_COMPILE_STATUS, compiled, 0);
 			if(compiled[0] == 0){
 				 Log.e("ES20_ERROR", "Could not compile shader " + shaderType + ":");
@@ -49,7 +59,9 @@ public class ShaderUtil {
 	
 	/**
 	 * 检查每一步的操作是否正确
-	 * 
+	 *
+	 * 流程 : 循环获取错误信息, 知道出现异常将异常信息打印出来
+	 *
 	 * 使用GLES20.glGetError()方法可以获取错误代码, 如果错误代码为0, 那么就没有错误
 	 * 
 	 * @param op 具体执行的方法名, 比如执行向着色程序中加入着色器, 
@@ -66,7 +78,9 @@ public class ShaderUtil {
 	
 	/**
 	 * 创建着色程序
-	 * 
+	 *
+	 * 流程 : 调用loadShader()加载顶点,片元着色器 -> 创建着色程序 -> 向着色程序中加载顶点,片元着色器 -> 连接程序 -> 获取链接结果
+	 *
 	 * ① 加载顶点着色器
 	 * ② 加载片元着色器
 	 * ③ 创建着色程序
@@ -103,6 +117,15 @@ public class ShaderUtil {
 
 			int[] linkStatus = new int[1];
 			//获取链接程序结果
+			/*
+			int[] linkStatus = new int[1];
+			GLES20.glGetProgramiv(program, GLES20.GL_LINK_STATUS, linkStatus, 0);
+			参数 : program , 程序的引用 ;
+				GLES20.GL_LINK_STATUS , 想要获取的信息的类别;
+				linkStatus , 存放结果的数组;
+				index , 将结果存放的数组的下标;
+						作用 : 这个方法可以获取到链接程序操作是否成功, 如果结果不为1, 说明链接程序失败;
+			 */
 			GLES20.glGetProgramiv(program, GLES20.GL_LINK_STATUS, linkStatus, 0);
 			if(linkStatus[0] != GLES20.GL_TRUE){
 				Log.e("ES20.ERROR", "链接程序失败 : ");
@@ -117,6 +140,8 @@ public class ShaderUtil {
 	
 	/**
 	 * 从assets中加载着色脚本
+	 *
+	 * 流程 : 打开assets输入流 -> 创建带缓冲区的输出流 -> 读取输入流信息放入缓冲区 -> 将缓冲区数据转为字符
 	 * 
 	 * ① 打开assets目录中的文件输入流
 	 * ② 创建带缓冲区的输出流

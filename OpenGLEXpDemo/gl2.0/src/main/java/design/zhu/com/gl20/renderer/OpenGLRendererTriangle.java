@@ -1,9 +1,7 @@
 package design.zhu.com.gl20.renderer;
 
 import android.opengl.GLES20;
-import android.opengl.GLSurfaceView;
 import android.opengl.GLSurfaceView.Renderer;
-import android.opengl.Matrix;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -11,7 +9,7 @@ import javax.microedition.khronos.opengles.GL10;
 import design.zhu.com.gl20.common.graphics.Triangle;
 
 public class OpenGLRendererTriangle implements Renderer {
-	private Triangle mTriangle;
+	private Triangle mTriangleColor;
 
 	public OpenGLRendererTriangle(){
 	}
@@ -23,8 +21,8 @@ public class OpenGLRendererTriangle implements Renderer {
 
 		//your init
 		// 初始化一个三角形
-		mTriangle = new Triangle();
-		mTriangle.onSurfaceCreated(gl10, eglConfig);
+		mTriangleColor = new Triangle();
+		mTriangleColor.onSurfaceCreated(gl10, eglConfig);
 	}
 
 	@Override
@@ -32,7 +30,7 @@ public class OpenGLRendererTriangle implements Renderer {
 		// 参数是left, top, width, height
 		GLES20.glViewport(0, 0, i, i1);
 
-		mTriangle.onSurfaceChanged(gl10,i,i1);
+		mTriangleColor.onSurfaceChanged(gl10,i,i1);
 	}
 
 	@Override
@@ -40,6 +38,6 @@ public class OpenGLRendererTriangle implements Renderer {
 		// 清除颜色缓冲区，因为我们要开始新一帧的绘制了，所以先清理，以免有脏数据
 		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-		mTriangle.onDrawFrame(gl10);
+		mTriangleColor.onDrawFrame(gl10);
 	}
 }

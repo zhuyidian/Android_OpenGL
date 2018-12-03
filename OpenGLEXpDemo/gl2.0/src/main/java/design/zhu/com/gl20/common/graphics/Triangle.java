@@ -1,8 +1,6 @@
 package design.zhu.com.gl20.common.graphics;
 
-import android.content.res.Resources;
 import android.opengl.GLES20;
-import android.opengl.Matrix;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -18,14 +16,16 @@ public class Triangle {
     private FloatBuffer vertexBuffer;
     // 数组中每个顶点的坐标数
     private final int COORDS_PER_VERTEX =3;
-    private float triangleCoords[]={ // 按逆时针方向顺序:
-            0.0f,0.622008459f,0.0f,// top
-            -0.5f,-0.311004243f,0.0f,// bottom left
-            0.5f,-0.311004243f,0.0f// bottom right
+    private float triangleCoords[] = {
+            0.5f,  0.5f, 0.0f, // top
+            -0.5f, -0.5f, 0.0f, // bottom left
+            0.5f, -0.5f, 0.0f  // bottom right
     };
-    // 设置颜色，分别为red, green, blue 和alpha (opacity)
-    private float color[]={0.63671875f,0.76953125f,0.22265625f,1.0f};
+    //设置颜色，依次为红绿蓝和透明通道
+    float color[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    //顶点个数
     private final int vertexCount = triangleCoords.length / COORDS_PER_VERTEX;
+    //顶点之间的偏移量  每个顶点四个字节
     private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
 
     private int mProgram = -1;
@@ -34,12 +34,6 @@ public class Triangle {
 	 */
     private String vertexShaderCode;								//顶点着色器脚本代码
     private String fragmentShaderCode;							//片元着色器脚本代码
-//    private final String vertexShaderCode =
-//            "attribute vec4 vPosition;" +
-//            "uniform mat4 uMVPMatrix;"+
-//                    "void main() {" +
-//                    "  gl_Position = uMVPMatrix*vPosition;" +
-//                    "}";
     /*
     一个标准的顶点着色器
     uniform mat4 uMVPMatrix;                             // 应用程序传入顶点着色器的总变换矩阵
@@ -54,14 +48,6 @@ public class Triangle {
         vColor = aColor;                                 // 将顶点颜色数据传入片元着色器
         vTextureCoord = aTextureCoord;                   // 将接收的纹理坐标传递给片元着色器
     }
-     */
-//    private final String fragmentShaderCode =
-//            "precision mediump float;" +
-//                    "uniform vec4 vColor;" +
-//                    "void main() {" +
-//                    "  gl_FragColor = vColor;" +
-//                    "}";
-    /*
     一个标准的片元着色器
     precision mediump float;                           // 设置工作精度
         varying vec4 vColor;                               // 接收从顶点着色器过来的顶点颜色数据
@@ -72,9 +58,10 @@ public class Triangle {
             gl_FragColor = texture2D(sTexture, vTextureCoord) * vColor;// 进行纹理采样
         }
      */
-    private float[] mMVPMatrix = new float[16];  //总变换矩阵
-    private float[] mProjectionMatrix = new float[16];  //投影矩阵
-    private float[] mViewMatrix = new float[16];  //相机视口矩阵
+    private final String A_POSITION = "vPosition";
+    private final String U_COLOR = "vColor";
+    private int uColorLocation;
+    private int aPositionLocation;
 
     public Triangle(){
         // 为存放形状的坐标，初始化顶点字节缓冲
@@ -95,45 +82,31 @@ public class Triangle {
         vertexShaderCode = ShaderUtil.loadFromAssetsFile("trianglevertex.sh", BaseApplication.getContext().getResources());
         fragmentShaderCode = ShaderUtil.loadFromAssetsFile("trianglefrag.sh", BaseApplication.getContext().getResources());
         mProgram = ShaderUtil.createProgram(vertexShaderCode,fragmentShaderCode);
-    }
-
-    public void onSurfaceChanged(GL10 gl10, int width, int height){
-        //得到投影矩阵
-        float ratio =(float) width / height;
-        // 此投影矩阵在onDrawFrame()中将应用到对象的坐标
-        Matrix.frustumM(mProjectionMatrix,0,-ratio, ratio,-1,1,3,7);
-        // 设置相机的位置(视口矩阵)
-        Matrix.setLookAtM(mViewMatrix,0,0,0,-3,0f,0f,0f,0f,1.0f,0.0f);
-        // 计算投影和视口变换
-        Matrix.multiplyMM(mMVPMatrix,0, mProjectionMatrix,0, mViewMatrix,0);
-    }
-
-    public void onDrawFrame(GL10 gl10) {
         // 将program加入OpenGL ES环境中
         // 告诉OpenGL，使用我们准备好了的shader program来渲染
         GLES20.glUseProgram(mProgram);
 
-        // 获得形状的变换矩阵的handle
-        int mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram,"uMVPMatrix");
-        // 应用投影和视口变换
-        GLES20.glUniformMatrix4fv(mMVPMatrixHandle,1,false, mMVPMatrix,0);
-
         // 获取指向vertex shader的成员vPosition的 handle
-        int mPositionHandle = GLES20.glGetAttribLocation(mProgram, "vPosition");
-        // 启用一个指向三角形的顶点数组的handle
-        GLES20.glEnableVertexAttribArray(mPositionHandle);
-        // 准备三角形的坐标数据
-        GLES20.glVertexAttribPointer(mPositionHandle, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false, vertexStride, vertexBuffer);
-
+        aPositionLocation = GLES20.glGetAttribLocation(mProgram, A_POSITION);
         // 获取指向fragment shader的成员vColor的handle
-        int mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
-        // 设置三角形的颜色
-        GLES20.glUniform4fv(mColorHandle, 1, color, 0);
+        uColorLocation = GLES20.glGetUniformLocation(mProgram, U_COLOR);
+        //---------传入顶点数据数据
+        //准备三角形的坐标数据
+        GLES20.glVertexAttribPointer(aPositionLocation, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false, vertexStride, vertexBuffer);
+        GLES20.glEnableVertexAttribArray(aPositionLocation);
+        //---------传入颜色数据
+        GLES20.glUniform4fv(uColorLocation, 1, color, 0);
+    }
 
+    public void onSurfaceChanged(GL10 gl10, int width, int height){
+
+    }
+
+    public void onDrawFrame(GL10 gl10) {
         // 画三角形
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexCount);
 
         // 禁用指向三角形的顶点数组
-        GLES20.glDisableVertexAttribArray(mPositionHandle);
+        //GLES20.glDisableVertexAttribArray(aPositionLocation);
     }
 }
