@@ -1,4 +1,4 @@
-package design.zhu.com.gl20;
+package design.zhu.com.gl20.renderer.imagerenderer;
 
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
@@ -6,9 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import design.zhu.com.gl20.renderer.imagerenderer.ColorFilter;
-import design.zhu.com.gl20.renderer.imagerenderer.ContrastColorFilter;
-import design.zhu.com.gl20.renderer.imagerenderer.SGLRender;
+import design.zhu.com.gl20.R;
 
 public class ImageActivity extends AppCompatActivity {
     private GLSurfaceView mGLView;

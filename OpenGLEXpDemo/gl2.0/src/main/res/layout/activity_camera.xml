@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <GLSurfaceView
+    <design.zhu.com.gl20.renderer.camera.CameraView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/mGLView" />
+        android:id="@+id/mCameraView" />
 </RelativeLayout>

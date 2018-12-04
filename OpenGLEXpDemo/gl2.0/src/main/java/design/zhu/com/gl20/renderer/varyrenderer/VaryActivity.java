@@ -1,11 +1,11 @@
-package design.zhu.com.gl20;
+package design.zhu.com.gl20.renderer.varyrenderer;
 
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import design.zhu.com.gl20.renderer.varyrenderer.VaryRender;
+import design.zhu.com.gl20.R;
 
 /**
  * Created by wuwang on 2016/10/30

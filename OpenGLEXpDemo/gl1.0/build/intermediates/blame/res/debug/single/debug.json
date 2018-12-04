@@ -1,38 +1,38 @@
 [
     {
-        "merged": "E:\\zhu-work\\git\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_desert.bmp.flat",
-        "source": "E:\\zhu-work\\git\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\src\\main\\res\\drawable-hdpi\\desert.bmp"
+        "merged": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\build\\intermediates\\res\\merged\\debug\\drawable_a.jpg.flat",
+        "source": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\src\\main\\res\\drawable\\a.jpg"
     },
     {
-        "merged": "E:\\zhu-work\\git\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\build\\intermediates\\res\\merged\\debug\\drawable_a.jpg.flat",
-        "source": "E:\\zhu-work\\git\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\src\\main\\res\\drawable\\a.jpg"
+        "merged": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_tree.png.flat",
+        "source": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\src\\main\\res\\drawable-hdpi\\tree.png"
     },
     {
-        "merged": "E:\\zhu-work\\git\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\build\\intermediates\\res\\merged\\debug\\drawable_earth.png.flat",
-        "source": "E:\\zhu-work\\git\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\src\\main\\res\\drawable\\earth.png"
+        "merged": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\build\\intermediates\\res\\merged\\debug\\drawable_ic_launcher.png.flat",
+        "source": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\src\\main\\res\\drawable\\ic_launcher.png"
     },
     {
-        "merged": "E:\\zhu-work\\git\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\build\\intermediates\\res\\merged\\debug\\layout_main.xml.flat",
-        "source": "E:\\zhu-work\\git\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\src\\main\\res\\layout\\main.xml"
+        "merged": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\build\\intermediates\\res\\merged\\debug\\drawable_b.gif.flat",
+        "source": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\src\\main\\res\\drawable\\b.gif"
     },
     {
-        "merged": "E:\\zhu-work\\git\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_icon.png.flat",
-        "source": "E:\\zhu-work\\git\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\src\\main\\res\\drawable-hdpi\\icon.png"
+        "merged": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_icon.png.flat",
+        "source": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\src\\main\\res\\drawable-hdpi\\icon.png"
     },
     {
-        "merged": "E:\\zhu-work\\git\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\build\\intermediates\\res\\merged\\debug\\drawable_ic_launcher.png.flat",
-        "source": "E:\\zhu-work\\git\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\src\\main\\res\\drawable\\ic_launcher.png"
+        "merged": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\build\\intermediates\\res\\merged\\debug\\drawable_earth.png.flat",
+        "source": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\src\\main\\res\\drawable\\earth.png"
     },
     {
-        "merged": "E:\\zhu-work\\git\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_tree.png.flat",
-        "source": "E:\\zhu-work\\git\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\src\\main\\res\\drawable-hdpi\\tree.png"
+        "merged": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\build\\intermediates\\res\\merged\\debug\\drawable_jay.png.flat",
+        "source": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\src\\main\\res\\drawable\\jay.png"
     },
     {
-        "merged": "E:\\zhu-work\\git\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\build\\intermediates\\res\\merged\\debug\\drawable_jay.png.flat",
-        "source": "E:\\zhu-work\\git\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\src\\main\\res\\drawable\\jay.png"
+        "merged": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\build\\intermediates\\res\\merged\\debug\\layout_main.xml.flat",
+        "source": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\src\\main\\res\\layout\\main.xml"
     },
     {
-        "merged": "E:\\zhu-work\\git\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\build\\intermediates\\res\\merged\\debug\\drawable_b.gif.flat",
-        "source": "E:\\zhu-work\\git\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\src\\main\\res\\drawable\\b.gif"
+        "merged": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_desert.bmp.flat",
+        "source": "E:\\project\\demo\\opengl\\Android_OpenGL\\OpenGLEXpDemo\\gl1.0\\src\\main\\res\\drawable-hdpi\\desert.bmp"
     }
 ]

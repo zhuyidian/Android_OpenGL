@@ -1,10 +1,8 @@
-package design.zhu.com.gl20;
+package design.zhu.com.gl20.renderer.baserenderer;
 
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
-import design.zhu.com.gl20.renderer.baserenderer.OpenGLRendererSquareTexture;
 
 public class PublicActivity extends AppCompatActivity {
     private GLSurfaceView mGLSurfaceView;
